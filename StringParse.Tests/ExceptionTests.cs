@@ -22,7 +22,7 @@ namespace StringParse.Tests {
         [TestMethod]
         public void ParseDef() {
             var e = Assert.ThrowsException<StrParseUnregisteredException>(() => {
-                "".Parse<object>(new object());
+                "".ParseOr<object>(new object());
             });
             Assert.IsTrue(e.Message.Contains($"TryParse<Object>(string, out Object)"));
         }
@@ -46,7 +46,7 @@ namespace StringParse.Tests {
         [TestMethod]
         public void ParseNumberStyleDef() {
             var e = Assert.ThrowsException<StrParseUnregisteredException>(() => {
-                "".Parse<Guid?>(Guid.NewGuid(), NumberStyles.HexNumber, null);
+                "".ParseOr<Guid?>(Guid.NewGuid(), NumberStyles.HexNumber, null);
             });
             Assert.IsTrue(e.Message.Contains($"TryParse<Guid?>(string, NumberStyles, IFormatProvider, out Guid?)"));
         }

@@ -31,8 +31,8 @@ namespace StringParse.Tests {
 
             [TestMethod]
             public void ParseDef() {
-                Assert.AreEqual("3".Parse(new S1{ S = 4 }).S, 3);
-                Assert.AreEqual("3s".Parse(new S1 { S = 4 }).S, 4);
+                Assert.AreEqual("3".ParseOr(new S1{ S = 4 }).S, 3);
+                Assert.AreEqual("3s".ParseOr(new S1 { S = 4 }).S, 4);
             }
 
             [TestMethod]
@@ -53,8 +53,8 @@ namespace StringParse.Tests {
 
         [TestMethod]
         public void ParseDef() {
-            Assert.AreEqual("3".Parse(1), 3);
-            Assert.AreEqual("3s".Parse(1), 1);
+            Assert.AreEqual("3".ParseOr(1), 3);
+            Assert.AreEqual("3s".ParseOr(1), 1);
         }
 
         [TestMethod]
@@ -71,9 +71,9 @@ namespace StringParse.Tests {
 
         [TestMethod]
         public void ParseNumberStyleFormatDef() {
-            Assert.AreEqual("F".Parse<int?>(3, NumberStyles.HexNumber, null), 15);
-            Assert.AreEqual("F".Parse<int?>(3, NumberStyles.HexNumber), 15);
-            Assert.AreEqual("FS".Parse<int?>(3, NumberStyles.HexNumber), 3);
+            Assert.AreEqual("F".ParseOr<int?>(3, NumberStyles.HexNumber, null), 15);
+            Assert.AreEqual("F".ParseOr<int?>(3, NumberStyles.HexNumber), 15);
+            Assert.AreEqual("FS".ParseOr<int?>(3, NumberStyles.HexNumber), 3);
         }
 
         [TestMethod]

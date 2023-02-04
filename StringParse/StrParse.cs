@@ -267,7 +267,7 @@ public static class StrParse {
         }
     }
 
-    public static T Parse<T>(this string str, T defaultValue) {
+    public static T ParseOr<T>(this string str, T defaultValue) {
         try {
             return StrParse<T>.TryParse!(str, out var val) ? val : defaultValue;
         } catch (NullReferenceException e) when (e.TargetSite!.DeclaringType == typeof(StrParse)) {
@@ -291,7 +291,7 @@ public static class StrParse {
         }
     }
 
-    public static T Parse<T>(this string str, T defaultValue, NumberStyles style, IFormatProvider? provider = null) {
+    public static T ParseOr<T>(this string str, T defaultValue, NumberStyles style, IFormatProvider? provider = null) {
         try {
             return StrParseNumberStyle<T>.TryParse!(str, style, provider, out var val) ? val : defaultValue;
         } catch (NullReferenceException e) when (e.TargetSite!.DeclaringType == typeof(StrParse)) {
@@ -348,10 +348,6 @@ public static class StrParse {
     #region Enum
 
 #if NETSTANDARD2_1 || NET5_0
-    /// 如果 ignoreCase 设置默认值，优先重载的是 <see cref="Parse{T}(string)" />
-    public static T Parse<T>(this string str, bool ignoreCase) where T : struct, Enum {
-        return Enum.Parse<T>(str, ignoreCase);
-    }
 
     public static T ParseEnum<T>(this string str, bool ignoreCase = true) where T : struct, Enum {
         return Enum.Parse<T>(str, ignoreCase);
@@ -359,7 +355,7 @@ public static class StrParse {
 
 #endif
 
-    public static T ParseEnum<T>(this string str, T defaultValue, bool ignoreCase = true) where T : struct, Enum {
+    public static T ParseEnumOr<T>(this string str, T defaultValue, bool ignoreCase = true) where T : struct, Enum {
         return Enum.TryParse<T>(str, ignoreCase, out var val) ? val : defaultValue;
     }
 

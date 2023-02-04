@@ -8,15 +8,6 @@ namespace StringParse.Tests {
 
 
         [TestMethod]
-        public void ParseWithBool() {
-            Assert.AreEqual("Monday".Parse(true), true);
-
-            Assert.AreEqual("monday".Parse<DayOfWeek>(true), DayOfWeek.Monday);
-            Assert.AreEqual("Monday".Parse<DayOfWeek>(false), DayOfWeek.Monday);
-            Assert.ThrowsException<ArgumentException>(() => "monday".Parse<DayOfWeek>(false));
-        }
-
-        [TestMethod]
         public void ParseEnum() {
             Assert.AreEqual("Monday".ParseEnum<DayOfWeek>(), DayOfWeek.Monday);
             Assert.AreEqual("monday".ParseEnum<DayOfWeek>(true), DayOfWeek.Monday);
@@ -26,11 +17,11 @@ namespace StringParse.Tests {
 
         [TestMethod]
         public void ParseEnumDef() {
-            Assert.AreEqual("Monday".ParseEnum(DayOfWeek.Wednesday), DayOfWeek.Monday);
-            Assert.AreEqual("Monday-".ParseEnum(DayOfWeek.Wednesday), DayOfWeek.Wednesday);
-            Assert.AreEqual("monday".ParseEnum(DayOfWeek.Wednesday, true), DayOfWeek.Monday);
-            Assert.AreEqual("Monday".ParseEnum(DayOfWeek.Wednesday, false), DayOfWeek.Monday);
-            Assert.AreEqual("monday".ParseEnum(DayOfWeek.Wednesday, false), DayOfWeek.Wednesday);
+            Assert.AreEqual("Monday".ParseEnumOr(DayOfWeek.Wednesday), DayOfWeek.Monday);
+            Assert.AreEqual("Monday-".ParseEnumOr(DayOfWeek.Wednesday), DayOfWeek.Wednesday);
+            Assert.AreEqual("monday".ParseEnumOr(DayOfWeek.Wednesday, true), DayOfWeek.Monday);
+            Assert.AreEqual("Monday".ParseEnumOr(DayOfWeek.Wednesday, false), DayOfWeek.Monday);
+            Assert.AreEqual("monday".ParseEnumOr(DayOfWeek.Wednesday, false), DayOfWeek.Wednesday);
         }
 
         [TestMethod]
@@ -41,7 +32,7 @@ namespace StringParse.Tests {
 
         [TestMethod]
         public void ParseDef() {
-            var e = Assert.ThrowsException<StrParseUnregisteredException>(() => "Monday".Parse(DayOfWeek.Monday));
+            var e = Assert.ThrowsException<StrParseUnregisteredException>(() => "Monday".ParseOr(DayOfWeek.Monday));
             Assert.IsTrue(e.Message.Contains("for Enum types"));
         }
 

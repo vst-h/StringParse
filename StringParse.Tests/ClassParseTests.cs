@@ -31,8 +31,8 @@ namespace StringParse.Tests {
 
             [TestMethod]
             public void ParseDef() {
-                Assert.AreEqual("3".Parse(new C1 { S = 4 }).S, 3);
-                Assert.AreEqual("3s".Parse(new C1 { S = 4 }).S, 4);
+                Assert.AreEqual("3".ParseOr(new C1 { S = 4 }).S, 3);
+                Assert.AreEqual("3s".ParseOr(new C1 { S = 4 }).S, 4);
             }
 
             [TestMethod]
@@ -52,8 +52,8 @@ namespace StringParse.Tests {
         [TestMethod]
         public void ParseDef() {
             var v1 = new Version(1, 2, 3, 4);
-            Assert.AreEqual("1.2.3.41".Parse(v1).ToString(), "1.2.3.41");
-            Assert.AreEqual("1.2.3-4".Parse(v1), v1);
+            Assert.AreEqual("1.2.3.41".ParseOr(v1).ToString(), "1.2.3.41");
+            Assert.AreEqual("1.2.3-4".ParseOr(v1), v1);
         }
 
     }
