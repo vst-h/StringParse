@@ -79,10 +79,10 @@ public static class StrParse {
         RegisterParse(DateTime.Parse);
         RegisterParse(DateTimeOffset.Parse);
         RegisterParse(System.Numerics.BigInteger.Parse);
-#if NETSTANDARD2_1 || NET5_0
+#if NETSTANDARD2_1 || NET5_0_OR_GREATER
         RegisterParse(System.Buffers.StandardFormat.Parse);
 #endif
-#if NET5_0
+#if NET5_0_OR_GREATER
         RegisterParse(Half.Parse);
         RegisterParse(IntPtr.Parse);
         RegisterParse(UIntPtr.Parse);
@@ -111,7 +111,7 @@ public static class StrParse {
         RegisterTryParse<DateTime>(DateTime.TryParse);
         RegisterTryParse<DateTimeOffset>(DateTimeOffset.TryParse);
         RegisterTryParse<System.Numerics.BigInteger>(System.Numerics.BigInteger.TryParse);
-#if NET5_0
+#if NET5_0_OR_GREATER
         RegisterTryParse<Half>(Half.TryParse);
         RegisterTryParse<IntPtr>(IntPtr.TryParse);
         RegisterTryParse<UIntPtr>(UIntPtr.TryParse);
@@ -119,7 +119,7 @@ public static class StrParse {
 
         RegisterTryParseClass<Version>(Version.TryParse!);
         RegisterTryParseClass<System.Net.IPAddress>(System.Net.IPAddress.TryParse!);
-#if NET5_0
+#if NET5_0_OR_GREATER
         RegisterTryParseClass<System.Net.NetworkInformation.PhysicalAddress>(System.Net.NetworkInformation.PhysicalAddress.TryParse!);
 #endif
 
@@ -139,7 +139,7 @@ public static class StrParse {
         RegisterParseFormat(DateTime.Parse);
         RegisterParseFormat(DateTimeOffset.Parse);
         RegisterParseFormat(System.Numerics.BigInteger.Parse);
-#if NET5_0
+#if NET5_0_OR_GREATER
         RegisterParseFormat(Half.Parse);
         RegisterParseFormat(IntPtr.Parse);
         RegisterParseFormat(UIntPtr.Parse);
@@ -159,7 +159,7 @@ public static class StrParse {
         RegisterParseStyle(double.Parse);
         RegisterParseStyle(decimal.Parse);
         RegisterParseStyle(System.Numerics.BigInteger.Parse);
-#if NET5_0
+#if NET5_0_OR_GREATER
         RegisterParseStyle(Half.Parse);
         RegisterParseStyle(IntPtr.Parse);
         RegisterParseStyle(UIntPtr.Parse);
@@ -178,7 +178,7 @@ public static class StrParse {
         RegisterTryParseStyle<double>(double.TryParse);
         RegisterTryParseStyle<decimal>(decimal.TryParse);
         RegisterTryParseStyle<System.Numerics.BigInteger>(System.Numerics.BigInteger.TryParse);
-#if NET5_0
+#if NET5_0_OR_GREATER
         RegisterTryParseStyle<Half>(Half.TryParse);
         RegisterTryParseStyle<IntPtr>(IntPtr.TryParse);
         RegisterTryParseStyle<UIntPtr>(UIntPtr.TryParse);
@@ -267,9 +267,9 @@ public static class StrParse {
         }
     }
 
-    public static T ParseOr<T>(this string str, T defaultValue) {
+    public static T ParseOr<T>(this string str, T orValue) {
         try {
-            return StrParse<T>.TryParse!(str, out var val) ? val : defaultValue;
+            return StrParse<T>.TryParse!(str, out var val) ? val : orValue;
         } catch (NullReferenceException e) when (e.TargetSite!.DeclaringType == typeof(StrParse)) {
             throw StrParseUnregisteredException.New<T>("TryParse<{0}>(string, out {0})");
         }
@@ -291,17 +291,17 @@ public static class StrParse {
         }
     }
 
-    public static T ParseOr<T>(this string str, T defaultValue, NumberStyles style, IFormatProvider? provider = null) {
+    public static T ParseOr<T>(this string str, T orValue, NumberStyles style, IFormatProvider? provider = null) {
         try {
-            return StrParseNumberStyle<T>.TryParse!(str, style, provider, out var val) ? val : defaultValue;
+            return StrParseNumberStyle<T>.TryParse!(str, style, provider, out var val) ? val : orValue;
         } catch (NullReferenceException e) when (e.TargetSite!.DeclaringType == typeof(StrParse)) {
             throw StrParseUnregisteredException.New<T>("TryParse<{0}>(string, NumberStyles, IFormatProvider, out {0})");
         }
     }
 
-    #endregion
+#endregion
 
-    #region TryParse<T>(this string str)
+#region TryParse<T>(this string str)
     public static bool TryParse<T>(this string? str, out T val) {
         try {
             return StrParse<T>.TryParse!(str, out val);
@@ -318,9 +318,9 @@ public static class StrParse {
         }
     }
 
-    #endregion
+#endregion
 
-    #region TryParseNullable
+#region TryParseNullable
 
     static bool TryParseNullable<T>(this string? str, out T? val) where T : struct {
         try {
@@ -343,11 +343,11 @@ public static class StrParse {
         }
     }
 
-    #endregion
+#endregion
 
-    #region Enum
+#region Enum
 
-#if NETSTANDARD2_1 || NET5_0
+#if NETSTANDARD2_1 || NET5_0_OR_GREATER
 
     public static T ParseEnum<T>(this string str, bool ignoreCase = true) where T : struct, Enum {
         return Enum.Parse<T>(str, ignoreCase);
@@ -355,8 +355,8 @@ public static class StrParse {
 
 #endif
 
-    public static T ParseEnumOr<T>(this string str, T defaultValue, bool ignoreCase = true) where T : struct, Enum {
-        return Enum.TryParse<T>(str, ignoreCase, out var val) ? val : defaultValue;
+    public static T ParseEnumOr<T>(this string str, T orValue, bool ignoreCase = true) where T : struct, Enum {
+        return Enum.TryParse<T>(str, ignoreCase, out var val) ? val : orValue;
     }
 
 
@@ -368,7 +368,7 @@ public static class StrParse {
         return Enum.TryParse(str, ignoreCase, out val);
     }
 
-    #endregion
+#endregion
 
 }
 
