@@ -10,10 +10,7 @@
 		<Authors>Vst.h</Authors>
 		<PackageId>Vst.StringParse</PackageId>
 		<PackageTags>Generic, String, Extension, Parse, TryParse</PackageTags>
-		<PackageReadmeFile>../README.md</PackageReadmeFile>
-		<!--
-		<Description>Provides a Parse generic extension method for string that converts string to T and no boxing occurs</Description>
-		-->
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageProjectUrl>https://github.com/vst-h/StringParse</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/vst-h/StringParse</RepositoryUrl>
@@ -22,7 +19,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="..\LICENSE" Pack="true" PackagePath="" />
+		<None Include="../LICENSE" Pack="true" PackagePath="" />
+		<None Include="../README.md" Pack="true" PackagePath="" />
 	</ItemGroup>
 
 </Project>

@@ -1,4 +1,7 @@
 # StringParse
+[![NuGet Version](https://img.shields.io/nuget/v/Vst.StringParse.svg?label=NuGet)](https://www.nuget.org/packages/Vst.StringParse)
+[![NuGet Download](https://img.shields.io/nuget/dt/Vst.StringParse.svg?sanitize=true&label=Downloads)](https://www.nuget.org/packages/Vst.StringParse)
+
 Provides a Parse generic extension method for string that converts string to T and no boxing occurs.
 ``` C#
 // The following code does not occur boxing
@@ -17,8 +20,8 @@ void Exmaple1() {
     // _ = "ss".Parse<int>();      // throw FormatException
 
     // with default value, Actually call the TryParse method internally
-    _ = "12".Parse(10);     // 12
-    _ = "ss".Parse(10);     // 10
+    _ = "12".ParseOr(10);     // 12
+    _ = "ss".ParseOr(10);     // 10
 
     // with NumberStyles
     _ = "F".Parse<int>(NumberStyles.HexNumber);      // 15
